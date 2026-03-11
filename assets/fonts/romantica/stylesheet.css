@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'ROMANTICA';
+    src: url('ROMANTICA-Regular.woff2') format('woff2'),
+        url('ROMANTICA-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
