@@ -1,0 +1,3338 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Digital Studio</title>
+  <meta name="description" content="Production vidéo & Stratégie Digitale">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'romantica';
+      src: url('/assets/fonts/ROMANTICA-Regular.woff2') format('woff2'),
+          url('/assets/fonts/ROMANTICA-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #000000;
+      --text: #ffffff;
+      --text-light: #999999;
+      --accent: #8b5cf6;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-theme="light"] {
+      --bg: #ffffff;
+      --text: #000000;
+      --text-light: #666666;
+      --accent: #8b5cf6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'romantica', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+    }
+
+    body {
+      transition: background var(--transition);
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: 'Poppins', system-ui, sans-serif;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    input, textarea, select {
+      font-family: 'Poppins', system-ui, sans-serif;
+    }
+
+    /* === HEADER === */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all var(--transition);
+    }
+
+    [data-theme="light"] header {
+      border-bottom-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      height: 40px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .logo img {
+      height: 80px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      transition: opacity var(--transition);
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    /* Logo day/night mode */
+    .logo-dark {
+      display: block;
+    }
+    
+    .logo-light {
+      display: none;
+    }
+
+    [data-theme="light"] .logo-dark {
+      display: none;
+    }
+
+    [data-theme="light"] .logo-light {
+      display: block;
+    }
+
+    nav {
+      display: flex;
+      gap: 0;
+    }
+
+    nav a {
+      display: inline-block;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--text-light);
+      transition: all var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .theme-btn, .menu-btn, .lang-btn {
+      font-size: 14px;
+      opacity: 0.5;
+      transition: opacity var(--transition);
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-btn svg {
+      stroke: currentColor;
+      color: var(--text);
+      transition: transform var(--transition);
+    }
+
+    .theme-btn:hover {
+      opacity: 1;
+    }
+
+    .theme-btn:hover svg {
+      transform: rotate(20deg);
+    }
+
+    .lang-btn {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .lang-btn:hover {
+      opacity: 1;
+    }
+
+    .menu-btn {
+      display: none;
+      font-size: 20px;
+    }
+
+    .theme-btn:hover, .menu-btn:hover, .lang-btn:hover {
+      opacity: 1;
+    }
+
+    /* === MAIN CONTAINER === */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* === HERO SECTION === */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    .hero h1,
+    .hero p,
+    .hero > div {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      max-width: 900px;
+      letter-spacing: -1px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-light);
+      max-width: 600px;
+      margin-bottom: 48px;
+      line-height: 1.8;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 14px 40px;
+      background: var(--accent);
+      color: white;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all var(--transition);
+    }
+
+    .cta:hover {
+      background: var(--accent);
+      opacity: 0.8;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        min-height: 100vh;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding-top: 100px;
+      }
+
+      .hero h1 {
+        margin-bottom: 24px;
+      }
+
+      .hero p {
+        margin-bottom: 32px;
+      }
+
+      [style*="display: flex; gap: 16px"] {
+        flex-direction: column;
+      }
+
+      [style*="display: flex; gap: 16px"] button {
+        width: 100%;
+      }
+    }
+
+    /* === SECTIONS === */
+    section {
+      padding: 120px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    [data-theme="light"] section {
+      border-top-color: rgba(0, 0, 0, 0.1);
+    }
+
+    section:first-of-type {
+      border-top: none;
+    }
+
+    h2 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 60px;
+      letter-spacing: -1px;
+    }
+
+    /* === ABOUT === */
+    #about p {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.9;
+      max-width: 800px;
+      margin-bottom: 24px;
+    }
+
+    #about p:first-of-type {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 60px;
+      margin-top: 80px;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .stat-number {
+        font-size: 36px;
+      }
+    }
+
+    /* === SERVICES === */
+    .services-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+
+    .service {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 40px;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(139, 92, 246, 0.02) 100%);
+      transition: all var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service:hover::before {
+      transform: scaleX(1);
+    }
+
+    [data-theme="light"] .service {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(139, 92, 246, 0.03) 100%);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .service:hover {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(139, 92, 246, 0.06) 100%);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.1);
+    }
+
+    [data-theme="light"] .service:hover {
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.04) 0%, rgba(139, 92, 246, 0.06) 100%);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.08);
+    }
+
+    .service-number {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 1;
+      opacity: 0.3;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .service:hover .service-number {
+      opacity: 0.6;
+      transform: scale(1.05);
+    }
+
+    .service-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-content h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+      margin-bottom: 16px;
+      color: var(--text);
+      letter-spacing: 0.5px;
+    }
+
+    .service-content p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .service::after {
+      content: '→';
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      font-size: 24px;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .service:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* === PROJECTS === */
+    .projects-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .project {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme="light"] .project {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .project::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 2;
+    }
+
+    .project:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease-out;
+    }
+
+    .project:hover img {
+      transform: scale(1.08);
+    }
+
+    .project:hover {
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(255, 85, 0, 0.1);
+      transform: translateY(-8px);
+    }
+
+    [data-theme="light"] .project:hover {
+      box-shadow: 0 20px 40px rgba(255, 85, 0, 0.08);
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.9) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .project:hover .project-overlay {
+      opacity: 1;
+    }
+
+    .project-overlay-content {
+      position: relative;
+    }
+
+    .project-overlay h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .project-overlay p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project::after {
+      content: '→';
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      font-size: 24px;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: 3;
+    }
+
+    .project:hover::after {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* === CONTACT === */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+      font-size: 14px;
+      transition: all var(--transition);
+    }
+
+    [data-theme="light"] .form-group input,
+    [data-theme="light"] .form-group textarea,
+    [data-theme="light"] .form-group select {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    [data-theme="light"] .form-group input:focus,
+    [data-theme="light"] .form-group textarea:focus,
+    [data-theme="light"] .form-group select:focus {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .contact-info h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .info-item {
+      margin-bottom: 32px;
+    }
+
+    .info-item label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .info-item p {
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .info-item a {
+      color: var(--accent);
+      transition: opacity var(--transition);
+    }
+
+    .info-item a:hover {
+      opacity: 0.8;
+    }
+
+    /* === FOOTER === */
+    footer {
+      padding: 80px 0 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-light);
+      font-size: 13px;
+    }
+
+    [data-theme="light"] footer {
+      border-top-color: rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      text-align: center;
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 16px 24px;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        flex-direction: column;
+        padding: 24px;
+        gap: 0;
+      }
+
+      nav.mobile-open {
+        display: flex;
+      }
+
+      nav.mobile-open a {
+        display: block;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        margin: 0;
+      }
+
+      nav.mobile-open a:last-child {
+        border-bottom: none;
+      }
+
+      nav.mobile-open a::after {
+        display: none;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      main {
+        padding: 0 24px;
+      }
+
+      .hero {
+        height: auto;
+        min-height: 80vh;
+        padding-top: 60px;
+        padding-bottom: 60px;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+        margin-bottom: 24px;
+      }
+
+      .hero p {
+        font-size: 16px;
+        margin-bottom: 32px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      h2 {
+        font-size: 32px;
+        margin-bottom: 40px;
+      }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+
+      .projects-list {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .project {
+        aspect-ratio: 16/9;
+      }
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .services-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .service {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-content {
+        padding: 12px 16px;
+      }
+
+      .logo {
+        font-size: 12px;
+      }
+
+      main {
+        padding: 0 16px;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 32px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .services-list {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .service {
+        padding: 24px;
+      }
+
+      .service-content p {
+        font-size: 14px;
+      }
+
+      nav {
+        padding: 16px;
+      }
+
+      nav.mobile-open a {
+        padding: 10px 0;
+      }
+    }
+
+    /* === ACCESSIBILITY === */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* === SERVICE MODAL === */
+    .service-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .service-modal.active {
+      display: flex;
+    }
+
+    .service-modal-content {
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 48px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-theme="light"] .service-modal-content {
+      background: #f5f5f5;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .service-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font-size: 20px;
+      color: var(--text);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    [data-theme="light"] .service-modal-close {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .service-modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+
+    .service-modal-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .service-modal-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-right: 32px;
+    }
+
+    .service-modal-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      text-transform: uppercase;
+      min-width: 60px;
+    }
+
+    .service-modal-header h2 {
+      margin: 0;
+      margin-top: 8px;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .service-modal-description {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .service-modal-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .detail-item {
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    [data-theme="light"] .detail-item {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .detail-item p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .service-modal-benefits {
+      margin-bottom: 32px;
+    }
+
+    .service-modal-benefits h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--text);
+    }
+
+    .benefits-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .benefits-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .service-modal-cta {
+      display: flex;
+      gap: 12px;
+    }
+
+    .service-modal-cta button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .service-modal-cta .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .service-modal-cta .btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    .service-modal-cta .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+    }
+
+    .service-modal-cta .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .service-modal-content {
+        padding: 32px 24px;
+      }
+
+      .service-modal-close {
+        top: 16px;
+        right: 16px;
+      }
+
+      .service-modal-header {
+        padding-right: 0;
+        margin-bottom: 24px;
+      }
+
+      .service-modal-number {
+        font-size: 36px;
+      }
+
+      .service-modal-header h2 {
+        font-size: 24px;
+      }
+
+      .service-modal-details {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .service-modal-cta {
+        flex-direction: column;
+      }
+    }
+
+    /* === PROJECT MODAL === */
+    .project-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .project-modal.active {
+      display: flex;
+    }
+
+    .project-modal-content {
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-theme="light"] .project-modal-content {
+      background: #f5f5f5;
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .project-modal-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font-size: 20px;
+      color: var(--text);
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+      padding: 0;
+    }
+
+    [data-theme="light"] .project-modal-close {
+      background: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .project-modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.1);
+    }
+
+    .project-modal-close svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+
+    .project-modal-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .project-modal-body {
+      padding: 48px;
+    }
+
+    .project-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+
+    .project-modal-header-content h2 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .project-modal-header-meta {
+      text-align: right;
+      font-size: 13px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .project-modal-description {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .project-modal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .project-detail-item {
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    [data-theme="light"] .project-detail-item {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .project-detail-item strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .project-detail-item p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .project-modal-section {
+      margin-bottom: 32px;
+    }
+
+    .project-modal-section h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: var(--text);
+    }
+
+    .project-modal-services {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .project-service-tag {
+      display: inline-block;
+      padding: 8px 16px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .project-modal-cta {
+      display: flex;
+      gap: 12px;
+    }
+
+    .project-modal-cta button {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .project-modal-cta a {
+      flex: 1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    .project-modal-cta .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .project-modal-cta .btn-primary:hover {
+      opacity: 0.8;
+    }
+
+    .project-modal-cta .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+    }
+
+    .project-modal-cta .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .project-modal-body {
+        padding: 32px 24px;
+      }
+
+      .project-modal-image {
+        height: 300px;
+      }
+
+      .project-modal-header {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .project-modal-header-content h2 {
+        font-size: 24px;
+      }
+
+      .project-modal-header-meta {
+        text-align: left;
+      }
+
+      .project-modal-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .project-modal-cta {
+        flex-direction: column;
+      }
+    }
+
+    /* === QUIZ MODAL === */
+    .quiz-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .quiz-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quiz-container {
+      background: var(--bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 48px;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      animation: slideUp 0.4s ease-out;
+    }
+
+    [data-theme="light"] .quiz-container {
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 24px;
+      opacity: 0.5;
+      cursor: pointer;
+      transition: opacity var(--transition);
+      border: none;
+      background: none;
+      color: var(--text);
+    }
+
+    .quiz-close:hover {
+      opacity: 1;
+    }
+
+    .quiz-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .quiz-subtitle {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+
+    .quiz-progress {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .quiz-progress {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-progress-bar {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.4s ease-out;
+    }
+
+    .quiz-question {
+      margin-bottom: 32px;
+    }
+
+    .quiz-question h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .quiz-option {
+      padding: 14px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-light);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-size: 14px;
+      text-align: left;
+    }
+
+    [data-theme="light"] .quiz-option {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    [data-theme="light"] .quiz-option:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--accent);
+      background: rgba(255, 85, 0, 0.1);
+      color: var(--text);
+    }
+
+    .quiz-result {
+      text-align: center;
+      padding: 32px 0;
+    }
+
+    .quiz-result h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .quiz-result-service {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .quiz-result-desc {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .quiz-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .quiz-btn {
+      padding: 12px 32px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all var(--transition);
+      border: none;
+      font-family: 'Poppins', system-ui, sans-serif;
+    }
+
+    .quiz-btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .quiz-btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .quiz-btn-secondary {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      background: transparent;
+    }
+
+    .quiz-btn-secondary:hover {
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .exp-warning {
+      color: #999999;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <skip class="sr-only"><a href="#main">Aller au contenu principal</a></skip>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-content">
+      <a href="#home" class="logo">
+        <!-- Logo pour le mode nuit (sombre) -->
+        <img class="logo-dark" src="https://imgur.com/5jxmefe.png" alt="The Digital Studio Logo">
+        <!-- Logo pour le mode jour (clair) - Remplacer l'URL ci-dessous par votre logo clair -->
+        <img class="logo-light" src="https://imgur.com/IRs61Ux.png" alt="The Digital Studio Logo" style="display: none;">
+      </a>
+      <nav id="nav">
+        <a href="#about" data-i18n="about">About</a>
+        <a href="#services" data-i18n="services">Services</a>
+        <a href="#projects" data-i18n="work">Work</a>
+        <a href="#contact" data-i18n="getInTouch">Get in touch</a>
+      </nav>
+      <div class="header-controls">
+        <button class="theme-btn" id="theme-toggle" aria-label="Changer le thème">
+          <svg id="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button class="lang-btn" id="lang-toggle" aria-label="Toggle language">EN</button>
+        <button class="menu-btn" id="menu-toggle" aria-label="Menu">≡</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <canvas id="hero-canvas"></canvas>
+      <h1>Créons vos histoires numériques.</h1>
+      <p>Nous transformons vos idées en expériences digitales impactantes. Des réseaux sociaux à la photographie, en passant par la création de site Internet (et bien d'autres).</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <button class="cta" data-i18n="startProject" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Démarrer un projet</button>
+        <button class="cta" data-i18n="discoverNeeds" style="background: transparent; border: 2px solid var(--accent); color: var(--accent);" onclick="openQuiz()">Découvrez ce que votre business a besoin</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2 data-i18n="about">À propos</h2>
+      <p>The Digital Studio est un collectif de créatifs passionnés par la création d'expériences digitales inoubliables. Nous travaillons avec des marques visionnaires pour transformer leurs ambitions en réalité.</p>
+      <p>Notre approche combine stratégie profonde et exécution créative de haut niveau.</p>
+      
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-number" data-target="10" data-suffix="+">0</div>
+          <div class="stat-label" data-i18n="statProjects">Projets</div>
+        </div>
+        <!-- <div class="stat">
+          <div class="stat-number" data-target="45" data-suffix="">0</div>
+          <div class="stat-label" data-i18n="statTalents">Talents</div>
+        </div> -->
+        <div class="stat">
+          <div class="stat-number" data-target="5" data-suffix=" ans*">0</div>
+          <div class="stat-label" data-i18n="statExperience">Expérience</div>
+        </div>
+      </div>
+    </section>
+    <h6 class="exp-warning">*Le nombre d'années d'expériences dépend de la compétence.</h6><br>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <h2 data-i18n="services">Services</h2>
+      <div class="services-list">
+        <div class="service" onclick="openServiceModal('essential')">
+          <div class="service-number">01</div>
+          <div class="service-content">
+            <h3>Réseaux Sociaux</h3>
+            <p><strong>Rendez chaque post visible, utile et mémorable.</strong><br><br>à partir de 149€/mois<br><br>
+          </div>
+        </div>
+        <div class="service" onclick="openServiceModal('advanced')">
+          <div class="service-number">02</div>
+          <div class="service-content">
+            <h3>Photographie</h3>
+            <p><strong>Des images pro qui vendent — sans complexité.</strong><br><br>à partir de 49€</p>
+          </div>
+        </div>
+        <div class="service" onclick="openServiceModal('premium')">
+          <div class="service-number">03</div>
+          <div class="service-content">
+            <h3>Conception de Site Web</h3>
+            <p><strong>Un site propre, tendance et stylé — pensé communication.</strong><br><br>à partir de 449€<br>Prix ajusté en fonction de la complexité.</p>
+          </div>
+        </div>
+        <div class="service" onclick="openServiceModal('photography')">
+          <div class="service-number">04</div>
+          <div class="service-content">
+            <h3>Branding Express</h3>
+            <p><strong>Une identité claire pour marquer les esprits.</strong><br><br>à partir de 199€</p>
+          </div>
+        </div>
+        <div class="service" onclick="openServiceModal('strategy')">
+          <div class="service-number">05</div>
+          <div class="service-content">
+            <h3>Com'360°</h3>
+            <p><strong>Tout ce qu’il faut pour exister en ligne — sans y penser.</strong><br><br>à partir de 599€/mois</p>
+          </div>
+        </div>
+        <div class="service" onclick="openServiceModal('custom')">
+          <div class="service-number">06</div>
+          <div class="service-content">
+            <h3>Formule Signature</h3>
+            <p><strong>Une stratégie unique, pensée pour votre business, pas pour un modèle.</strong><br><br>Tarif sur devis</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICE MODAL -->
+    <div id="service-modal" class="service-modal">
+      <div class="service-modal-content">
+        <button class="service-modal-close" onclick="closeServiceModal()">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <div id="service-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2 data-i18n="work">Nos travaux</h2>
+      <div class="projects-list">
+        <div class="project" onclick="openProjectModal('burban')">
+          <img src="https://i.imgur.com/RczOHfT.png" alt="Projet Burban">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>Burban</h3>
+              <p>Site Web Complet</p>
+            </div>
+          </div>
+        </div>
+        <!--<div class="project" onclick="openProjectModal('brandflow')">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=600&fit=crop" alt="Projet BrandFlow">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>BrandFlow Identity</h3>
+              <p>Branding • Design • Web</p>
+            </div>
+          </div>
+        </div>
+        <div class="project" onclick="openProjectModal('streamvibe')">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=600&fit=crop" alt="Projet StreamVibe">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>StreamVibe Platform</h3>
+              <p>UX Design • Development</p>
+            </div>
+          </div>
+        </div>
+        <div class="project" onclick="openProjectModal('visualabs')">
+          <img src="https://images.unsplash.com/photo-1515378791036-0648a3e4d747?w=600&h=600&fit=crop" alt="Projet VisuaLabs">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>VisuaLabs Summit</h3>
+              <p>Event video • Live streaming</p>
+            </div>
+          </div>
+        </div>
+        <div class="project" onclick="openProjectModal('neuraiai')">
+          <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=600&fit=crop" alt="Projet NeuralAI">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>NeuralAI Campaign</h3>
+              <p>Concept • Production</p>
+            </div>
+          </div>
+        </div>
+        <div class="project" onclick="openProjectModal('creativehub')">
+          <img src="https://images.unsplash.com/photo-1460925895917-aeb19be489c7?w=600&h=600&fit=crop" alt="Projet CreativeHub">
+          <div class="project-overlay">
+            <div class="project-overlay-content">
+              <h3>CreativeHub Analytics</h3>
+              <p>Data visualization • Dashboard</p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <!-- PROJECT MODAL -->
+    <div id="project-modal" class="project-modal">
+      <div class="project-modal-content">
+        <button class="project-modal-close" onclick="closeProjectModal()">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <div id="project-modal-body"></div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2 data-i18n="contactTitle">Lançons votre projet</h2>
+      <div class="contact-wrapper">
+        <form class="contact-form" id="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label for="name" data-i18n="nameLabel">Votre nom</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="emailLabel">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="message" data-i18n="messageLabel">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="cta" data-i18n="sendBtn">Envoyer</button>
+          <div id="form-status" style="font-size: 13px; color: var(--text-light); margin-top: 16px;"></div>
+        </form>
+
+        <div class="contact-info">
+          <h3>Contact</h3>
+          <div class="info-item">
+            <label>Email</label>
+            <p><a href="mailto:thedigitalstudio@icloud.com">thedigitalstudio@icloud.com</a></p>
+          </div>
+          <div class="info-item">
+            <label>Téléphone</label>
+            <p><a href="tel:+33612345678">+33 7 76 69 16 06</a></p>
+          </div>
+          <div class="info-item">
+            <label>Localisation</label>
+            <p>Rennes, France</p>
+          </div>
+          <div class="info-item">
+            <label>Réseaux</label>
+            <p>
+              <a href="https://twitter.com" target="_blank" rel="noopener">Facebook</a> • 
+              <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- QUIZ MODAL -->
+  <div id="quiz-modal" class="quiz-modal">
+    <div class="quiz-container">
+      <button class="quiz-close" onclick="closeQuiz()">✕</button>
+      <div id="quiz-content"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© <span id="year"></span> The Digital Studio</p>
+  </footer>
+
+  <script>
+    // === LANGUAGE & TRANSLATIONS ===
+    const translations = {
+      fr: {
+        // Navigation
+        about: 'À propos',
+        services: 'Services',
+        work: 'Nos travaux',
+        getInTouch: 'Contactez-nous',
+        // Hero & CTA
+        startProject: 'Démarrer un projet',
+        discoverNeeds: 'Découvrez ce que votre business a besoin',
+        // About section
+        statProjects: 'Projets',
+        statTalents: 'Talents',
+        statExperience: 'Expérience',
+        aboutTitle: 'À propos',
+        aboutText1: 'The Digital Studio est un collectif de créatifs passionnés par la création d\'expériences digitales inoubliables. Nous travaillons avec des marques visionnaires pour transformer leurs ambitions en réalité.',
+        aboutText2: 'Notre approche combine stratégie profonde et exécution créative de haut niveau.',
+        // Services & Projects sections
+        servicesTitle: 'Services',
+        workTitle: 'Nos travaux',
+        // Contact & Form
+        contactTitle: 'Lançons votre projet',
+        nameLabel: 'Votre nom',
+        emailLabel: 'Email',
+        messageLabel: 'Message',
+        sendBtn: 'Envoyer',
+        visitWebsite: 'Visiter le site web',
+        close: 'Fermer',
+        discuss: 'Discuter du projet',
+        // Modal labels
+        timeline: 'Timeline',
+        budget: 'Budget',
+        process: 'Processus',
+        deliverables: 'Livrables',
+        ourProcess: 'Notre processus',
+        client: 'Client',
+        duration: 'Durée',
+        servicesProvided: 'Services Fournis',
+        resultsAchieved: 'Résultats Obtenus',
+        website: 'Site Web',
+        // Contact info labels
+        contactInfoTitle: 'Contact',
+        emailLabelInfo: 'Email',
+        phoneLabel: 'Téléphone',
+        locationLabel: 'Localisation',
+        socialLabel: 'Réseaux',
+        // Service titles & descriptions
+        serviceEssentialTitle: 'Réseaux Sociaux',
+        serviceEssentialDesc: 'Rendez chaque post visible, utile et mémorable.',
+        serviceAdvancedTitle: 'Photographie',
+        serviceAdvancedDesc: 'Des images pro qui vendent — sans complexité.',
+        servicePremiumTitle: 'Conception de Site Web',
+        servicePremiumDesc: 'Un site propre, tendance et stylé — pensé communication.',
+        servicePhotographyTitle: 'Branding Express',
+        servicePhotographyDesc: 'Une identité claire pour marquer les esprits.',
+        serviceStrategyTitle: 'Com\'360°',
+        serviceStrategyDesc: 'Tout ce qu\'il faut pour exister en ligne — sans y penser.',
+        serviceCustomTitle: 'Formule Signature',
+        serviceCustomDesc: 'Une stratégie unique, pensée pour votre business, pas pour un modèle.',
+        // Project titles & descriptions
+        projectBurbanTitle: 'Burban',
+        projectBurbanDesc: 'Site Web Complet',
+        projectBrandflowTitle: 'BrandFlow Identity',
+        projectBrandflowDesc: 'Branding • Design • Web',
+        projectStreamvibeTitle: 'StreamVibe Platform',
+        projectStreamvibeDesc: 'UX Design • Development',
+        projectVisualabsTitle: 'VisuaLabs Summit',
+        projectVisualabsDesc: 'Event video • Live streaming',
+        projectNeuraiaiTitle: 'NeuralAI Campaign',
+        projectNeuraiaiDesc: 'Concept • Production',
+        projectCreativehubTitle: 'CreativeHub Analytics',
+        projectCreativehubDesc: 'Data visualization • Dashboard',
+        // Service modal subtitles
+        essentialSubtitle: 'Publications & design de base',
+        advancedSubtitle: 'Publications, identité visuelle & cohérence',
+        premiumSubtitle: 'Accompagnement éditorial complet',
+        photographySubtitle: 'Shooting photo simple & efficace',
+        strategySubtitle: 'Clarté, cohérence et direction',
+        customSubtitle: 'Adaptée à vos besoins réels',
+        // Quiz translations
+        quizTitle: 'Questions sur vos besoins',
+        quizRestart: 'Recommencer le quiz',
+        quiz_q1: 'Quel est votre principal besoin actuellement ?',
+        quiz_q1_o1: 'Publier régulièrement du contenu de qualité',
+        quiz_q1_o2: 'Renforcer mon identité visuelle et cohérence',
+        quiz_q1_o3: 'Stratégie complète avec accompagnement mensuel',
+        quiz_q1_o4: 'Des photos professionnelles pour mes réseaux',
+        quiz_q2: 'Quel est votre budget mensuel/projet ?',
+        quiz_q2_o1: 'Moins de 300€',
+        quiz_q2_o2: '300€ à 450€',
+        quiz_q2_o3: '450€ à 600€',
+        quiz_q2_o4: 'Plus de 600€ ou sur devis',
+        quiz_q3: 'Quel est votre secteur d\'activité ?',
+        quiz_q3_o1: 'E-commerce / Retail',
+        quiz_q3_o2: 'Services / Consulting',
+        quiz_q3_o3: 'Technologie / Startup',
+        quiz_q3_o4: 'Autre (ou multi-secteur)',
+        quiz_q4: 'Avez-vous actuellement une stratégie de contenu définie ?',
+        quiz_q4_o1: 'Non, j\'ai besoin d\'aide pour la définir',
+        quiz_q4_o2: 'Oui, mais elle a besoin d\'être affinée',
+        quiz_q4_o3: 'Oui, et je veux juste augmenter la production',
+        quiz_q4_o4: 'Je publie au hasard, besoin de structure',
+        quiz_q5: 'Quel type de contenu vous manque le plus ?',
+        quiz_q5_o1: 'Photos authentiques pour mes produits/services',
+        quiz_q5_o2: 'Design et visuels cohérents',
+        quiz_q5_o3: 'Contenu régulier et équilibré',
+        quiz_q5_o4: 'Tout - besoin d\'une approche complète',
+        quiz_q6: 'Quel est votre timeline ?',
+        quiz_q6_o1: 'Urgent (moins de 2 semaines)',
+        quiz_q6_o2: 'Court terme (1-2 mois)',
+        quiz_q6_o3: 'Moyen terme (2-4 mois)',
+        quiz_q6_o4: 'Long terme (suivi mensuel continu)',
+        quiz_q7: 'Avez-vous une équipe interne pour la création ?',
+        quiz_q7_o1: 'Non, j\'ai besoin de tout externaliser',
+        quiz_q7_o2: 'Oui, mais je manque de temps',
+        quiz_q7_o3: 'Oui, mais je veux un regard expert',
+        quiz_q7_o4: 'Besoin d\'une aide ponctuelle',
+        quiz_q8: 'Quel est votre objectif principal en 6 mois ?',
+        quiz_q8_o1: 'Augmenter la visibilité et l\'engagement',
+        quiz_q8_o2: 'Créer une identité visuelle forte',
+        quiz_q8_o3: 'Publier régulièrement sans stress',
+        quiz_q8_o4: 'Avoir des ressources visuelles de qualité',
+        quiz_q9: 'Êtes-vous actif sur les réseaux sociaux ?',
+        quiz_q9_o1: 'Non, j\'ai juste un site web',
+        quiz_q9_o2: 'Oui, mais irrégulièrement',
+        quiz_q9_o3: 'Oui, régulièrement mais manque de cohérence',
+        quiz_q9_o4: 'Oui, et je veux une stratégie omnicanal',
+        quiz_q10: 'Quel est votre plus gros défi actuellement ?',
+        quiz_q10_o1: 'Manque de contenu visuels de qualité',
+        quiz_q10_o2: 'Manque de time pour créer/publier',
+        quiz_q10_o3: 'Incohérence visuelle et de message',
+        quiz_q10_o4: 'Pas de ROI mesurable sur mes efforts',
+        quiz_results: 'Résultats recommandés',
+        quiz_cta: 'Discuter du projet',
+        formSending: 'Envoi...',
+        formSuccess: '✓ Message envoyé avec succès!',
+        expWarning: '*Le nombre d\'années d\'expériences dépend de la compétence.',
+        // Footer
+        footerCopyright: '©'
+      },
+      en: {
+        // Navigation
+        about: 'About',
+        services: 'Services',
+        work: 'Work',
+        getInTouch: 'Get in touch',
+        // Hero & CTA
+        startProject: 'Start a project',
+        discoverNeeds: 'Discover what your business needs',
+        // About section
+        statProjects: 'Projects',
+        statTalents: 'Talents',
+        statExperience: 'Experience',
+        aboutTitle: 'About',
+        aboutText1: 'The Digital Studio is a collective of creatives passionate about creating unforgettable digital experiences. We work with visionary brands to transform their ambitions into reality.',
+        aboutText2: 'Our approach combines deep strategy and high-level creative execution.',
+        // Services & Projects sections
+        servicesTitle: 'Services',
+        workTitle: 'Work',
+        // Contact & Form
+        contactTitle: 'Let\'s launch your project',
+        nameLabel: 'Your name',
+        emailLabel: 'Email',
+        messageLabel: 'Message',
+        sendBtn: 'Send',
+        visitWebsite: 'Visit website',
+        close: 'Close',
+        discuss: 'Discuss the project',
+        // Modal labels
+        timeline: 'Timeline',
+        budget: 'Budget',
+        process: 'Process',
+        deliverables: 'Deliverables',
+        ourProcess: 'Our process',
+        client: 'Client',
+        duration: 'Duration',
+        servicesProvided: 'Services Provided',
+        resultsAchieved: 'Results Achieved',
+        website: 'Website',
+        // Contact info labels
+        contactInfoTitle: 'Contact',
+        emailLabelInfo: 'Email',
+        phoneLabel: 'Phone',
+        locationLabel: 'Location',
+        socialLabel: 'Socials',
+        // Service titles & descriptions
+        serviceEssentialTitle: 'Social Networks',
+        serviceEssentialDesc: 'Make every post visible, useful, and memorable.',
+        serviceAdvancedTitle: 'Photography',
+        serviceAdvancedDesc: 'Professional images that sell — without complexity.',
+        servicePremiumTitle: 'Web Design',
+        servicePremiumDesc: 'A clean, trendy, and stylish site — communication-focused.',
+        servicePhotographyTitle: 'Express Branding',
+        servicePhotographyDesc: 'A clear identity to make a lasting impression.',
+        serviceStrategyTitle: 'Com\'360°',
+        serviceStrategyDesc: 'Everything you need to exist online — without thinking about it.',
+        serviceCustomTitle: 'Signature Formula',
+        serviceCustomDesc: 'A unique strategy, designed for your business, not a template.',
+        // Project titles & descriptions
+        projectBurbanTitle: 'Burban',
+        projectBurbanDesc: 'Complete Website',
+        projectBrandflowTitle: 'BrandFlow Identity',
+        projectBrandflowDesc: 'Branding • Design • Web',
+        projectStreamvibeTitle: 'StreamVibe Platform',
+        projectStreamvibeDesc: 'UX Design • Development',
+        projectVisualabsTitle: 'VisuaLabs Summit',
+        projectVisualabsDesc: 'Event video • Live streaming',
+        projectNeuraiaiTitle: 'NeuralAI Campaign',
+        projectNeuraiaiDesc: 'Concept • Production',
+        projectCreativehubTitle: 'CreativeHub Analytics',
+        projectCreativehubDesc: 'Data visualization • Dashboard',
+        // Service modal subtitles
+        essentialSubtitle: 'Basic publications & design',
+        advancedSubtitle: 'Visual identity & consistency',
+        premiumSubtitle: 'Complete editorial support',
+        photographySubtitle: 'Simple & effective photo shoot',
+        strategySubtitle: 'Clarity, consistency & direction',
+        customSubtitle: 'Adapted to your real needs',
+        // Quiz translations
+        quizTitle: 'Questions about your needs',
+        quizRestart: 'Restart the quiz',
+        quiz_q1: 'What is your main need right now?',
+        quiz_q1_o1: 'Publish quality content regularly',
+        quiz_q1_o2: 'Strengthen my visual identity and consistency',
+        quiz_q1_o3: 'Complete strategy with monthly support',
+        quiz_q1_o4: 'Professional photos for my networks',
+        quiz_q2: 'What is your monthly/project budget?',
+        quiz_q2_o1: 'Less than €300',
+        quiz_q2_o2: '€300 to €450',
+        quiz_q2_o3: '€450 to €600',
+        quiz_q2_o4: 'Over €600 or custom quote',
+        quiz_q3: 'What is your industry?',
+        quiz_q3_o1: 'E-commerce / Retail',
+        quiz_q3_o2: 'Services / Consulting',
+        quiz_q3_o3: 'Technology / Startup',
+        quiz_q3_o4: 'Other (or multi-sector)',
+        quiz_q4: 'Do you currently have a defined content strategy?',
+        quiz_q4_o1: 'No, I need help defining it',
+        quiz_q4_o2: 'Yes, but it needs refinement',
+        quiz_q4_o3: 'Yes, and I just want to increase production',
+        quiz_q4_o4: 'I publish randomly, need structure',
+        quiz_q5: 'What type of content do you lack the most?',
+        quiz_q5_o1: 'Authentic photos for my products/services',
+        quiz_q5_o2: 'Consistent design and visuals',
+        quiz_q5_o3: 'Regular and balanced content',
+        quiz_q5_o4: 'Everything - need a complete approach',
+        quiz_q6: 'What is your timeline?',
+        quiz_q6_o1: 'Urgent (less than 2 weeks)',
+        quiz_q6_o2: 'Short term (1-2 months)',
+        quiz_q6_o3: 'Medium term (2-4 months)',
+        quiz_q6_o4: 'Long term (continuous monthly follow-up)',
+        quiz_q7: 'Do you have an internal team for creation?',
+        quiz_q7_o1: 'No, I need to outsource everything',
+        quiz_q7_o2: 'Yes, but I lack time',
+        quiz_q7_o3: 'Yes, but I want expert insight',
+        quiz_q7_o4: 'Need occasional help',
+        quiz_q8: 'What is your main goal in 6 months?',
+        quiz_q8_o1: 'Increase visibility and engagement',
+        quiz_q8_o2: 'Create a strong visual identity',
+        quiz_q8_o3: 'Publish regularly without stress',
+        quiz_q8_o4: 'Have quality visual resources',
+        quiz_q9: 'Are you active on social media?',
+        quiz_q9_o1: 'No, I just have a website',
+        quiz_q9_o2: 'Yes, but irregularly',
+        quiz_q9_o3: 'Yes, regularly but lacks consistency',
+        quiz_q9_o4: 'Yes, and I want an omnichannel strategy',
+        quiz_q10: 'What is your biggest challenge currently?',
+        quiz_q10_o1: 'Lack of quality visual content',
+        quiz_q10_o2: 'Lack of time to create/publish',
+        quiz_q10_o3: 'Visual and message inconsistency',
+        quiz_q10_o4: 'No measurable ROI on my efforts',
+        quiz_results: 'Recommended results',
+        quiz_cta: 'Discuss the project',
+        formSending: 'Sending...',
+        formSuccess: '✓ Message sent successfully!',
+        expWarning: '*Years of experience depends on the skill.',
+        footerCopyright: '©'
+      }
+    };
+
+    // Detect user language
+    let userLanguage = localStorage.getItem('language');
+    if (!userLanguage) {
+      const browserLang = navigator.language || navigator.userLanguage;
+      userLanguage = browserLang.startsWith('fr') ? 'fr' : 'en';
+      localStorage.setItem('language', userLanguage);
+    }
+    document.documentElement.setAttribute('lang', userLanguage);
+
+    function t(key) {
+      return translations[userLanguage][key] || key;
+    }
+
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // === THEME ===
+    const themeToggle = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+    
+    // Detect system theme preference
+    let savedTheme = localStorage.getItem('theme');
+    if (!savedTheme) {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      savedTheme = prefersDark ? 'dark' : 'light';
+    }
+    
+    htmlElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = htmlElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      htmlElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+      updateLogo(newTheme);
+    });
+
+    function updateThemeIcon(theme) {
+      const sunIcon = document.getElementById('sun-icon');
+      const moonIcon = document.getElementById('moon-icon');
+      if (theme === 'dark') {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      } else {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
+    }
+
+    // Update logo based on theme
+    function updateLogo(theme) {
+      const logoDark = document.querySelector('.logo-dark');
+      const logoLight = document.querySelector('.logo-light');
+      if (theme === 'dark') {
+        logoDark.style.display = 'block';
+        logoLight.style.display = 'none';
+      } else {
+        logoDark.style.display = 'none';
+        logoLight.style.display = 'block';
+      }
+    }
+
+    // Initialize theme
+    updateLogo(savedTheme);
+
+    // Mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('mobile-open');
+    });
+
+    document.querySelectorAll('#nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('mobile-open');
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href.length > 1) {
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+
+    // Form submit
+    function handleSubmit(event) {
+      event.preventDefault();
+      const formStatus = document.getElementById('form-status');
+      const form = document.getElementById('contact-form');
+
+      formStatus.textContent = 'Envoi...';
+
+      setTimeout(() => {
+        const formData = new FormData(form);
+        const data = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message'),
+          timestamp: new Date().toISOString()
+        };
+
+        const submissions = JSON.parse(localStorage.getItem('submissions') || '[]');
+        submissions.push(data);
+        localStorage.setItem('submissions', JSON.stringify(submissions));
+
+        formStatus.textContent = '✓ Message envoyé avec succès!';
+        form.reset();
+
+        setTimeout(() => {
+          formStatus.textContent = '';
+        }, 4000);
+      }, 600);
+    }
+
+    // === ANIMATED STATS ===
+    let statsAnimated = false;
+
+    function animateStats() {
+      if (statsAnimated) return;
+      
+      const statNumbers = document.querySelectorAll('.stat-number');
+      
+      statNumbers.forEach(stat => {
+        const target = parseInt(stat.dataset.target);
+        const suffix = stat.dataset.suffix || '';
+        const duration = 2000;
+        const steps = 60;
+        const stepDuration = duration / steps;
+        let current = 0;
+        let step = 0;
+
+        const increment = target / steps;
+
+        const timer = setInterval(() => {
+          step++;
+          current += increment;
+
+          if (step >= steps) {
+            stat.textContent = target + suffix;
+            clearInterval(timer);
+          } else {
+            stat.textContent = Math.floor(current) + suffix;
+          }
+        }, stepDuration);
+      });
+
+      statsAnimated = true;
+    }
+
+    // Intersection Observer pour déclencher l'animation quand la section est visible
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateStats();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      observer.observe(aboutSection);
+    }
+
+    // === QUIZ SYSTEM ===
+    const quizData = [
+      {
+        question: "Quel est votre principal besoin actuellement ?",
+        options: [
+          { text: "Publier régulièrement du contenu de qualité", category: "essential" },
+          { text: "Renforcer mon identité visuelle et cohérence", category: "advanced" },
+          { text: "Stratégie complète avec accompagnement mensuel", category: "premium" },
+          { text: "Des photos professionnelles pour mes réseaux", category: "photography" }
+        ]
+      },
+      {
+        question: "Quel est votre budget mensuel/projet ?",
+        options: [
+          { text: "Moins de 300€", category: "essential" },
+          { text: "300€ à 450€", category: "advanced" },
+          { text: "450€ à 600€", category: "premium" },
+          { text: "Plus de 600€ ou sur devis", category: "custom" }
+        ]
+      },
+      {
+        question: "Quel est votre secteur d'activité ?",
+        options: [
+          { text: "E-commerce / Retail", category: "photography" },
+          { text: "Services / Consulting", category: "advanced" },
+          { text: "Technologie / Startup", category: "premium" },
+          { text: "Autre (ou multi-secteur)", category: "strategy" }
+        ]
+      },
+      {
+        question: "Avez-vous actuellement une stratégie de contenu définie ?",
+        options: [
+          { text: "Non, j'ai besoin d'aide pour la définir", category: "strategy" },
+          { text: "Oui, mais elle a besoin d'être affinée", category: "advanced" },
+          { text: "Oui, et je veux juste augmenter la production", category: "premium" },
+          { text: "Je publie au hasard, besoin de structure", category: "essential" }
+        ]
+      },
+      {
+        question: "Quel type de contenu vous manque le plus ?",
+        options: [
+          { text: "Photos authentiques pour mes produits/services", category: "photography" },
+          { text: "Design et visuels cohérents", category: "advanced" },
+          { text: "Contenu régulier et équilibré", category: "essential" },
+          { text: "Tout - besoin d'une approche complète", category: "premium" }
+        ]
+      },
+      {
+        question: "Quel est votre timeline ?",
+        options: [
+          { text: "Urgent (moins de 2 semaines)", category: "custom" },
+          { text: "Court terme (1-2 mois)", category: "photography" },
+          { text: "Moyen terme (2-4 mois)", category: "advanced" },
+          { text: "Long terme (suivi mensuel continu)", category: "premium" }
+        ]
+      },
+      {
+        question: "Avez-vous une équipe interne pour la création ?",
+        options: [
+          { text: "Non, j'ai besoin de tout externaliser", category: "premium" },
+          { text: "Oui, mais je manque de temps", category: "essential" },
+          { text: "Oui, mais je veux un regard expert", category: "advanced" },
+          { text: "Besoin d'une aide ponctuelle", category: "photography" }
+        ]
+      },
+      {
+        question: "Quel est votre objectif principal en 6 mois ?",
+        options: [
+          { text: "Augmenter la visibilité et l'engagement", category: "premium" },
+          { text: "Créer une identité visuelle forte", category: "advanced" },
+          { text: "Publier régulièrement sans stress", category: "essential" },
+          { text: "Avoir des ressources visuelles de qualité", category: "photography" }
+        ]
+      },
+      {
+        question: "Êtes-vous actif sur les réseaux sociaux ?",
+        options: [
+          { text: "Non, j'ai juste un site web", category: "photography" },
+          { text: "Oui, mais irrégulièrement", category: "essential" },
+          { text: "Oui, régulièrement mais manque de cohérence", category: "advanced" },
+          { text: "Oui, et je veux une stratégie omnicanal", category: "premium" }
+        ]
+      },
+      {
+        question: "Quel est votre plus gros défi actuellement ?",
+        options: [
+          { text: "Manque de contenu visuels de qualité", category: "photography" },
+          { text: "Manque de time pour créer/publier", category: "essential" },
+          { text: "Incohérence visuelle et de message", category: "strategy" },
+          { text: "Pas de ROI mesurable sur mes efforts", category: "premium" }
+        ]
+      }
+    ];
+
+    const serviceResults = {
+      essential: {
+        title: "Création Essentielle",
+        description: "Vous avez besoin d'une présence régulière et cohérente sur les réseaux sociaux. Nos publications mensuelles et templates vous permettront de publier en toute sérénité.",
+        benefits: [
+          "6 publications mensuelles prêtes à poster",
+          "Calendrier éditorial simple et structure",
+          "Templates Canva réutilisables",
+          "Budget accessible : 150-220€/mois"
+        ]
+      },
+      advanced: {
+        title: "Création Avancée",
+        description: "Vous recherchez un feed professionnel avec une identité visuelle cohérente. Nous créons des contenus harmonisés qui renforcent votre image de marque.",
+        benefits: [
+          "10-12 publications mensuelles",
+          "Identité visuelle personnalisée",
+          "Harmonisat du feed complet",
+          "Templates Canva personnalisés"
+        ]
+      },
+      premium: {
+        title: "Création Premium",
+        description: "Vous avez besoin d'un véritable partenaire pour développer votre visibilité long terme. Accompagnement éditorial complet avec stratégie et optimisation continue.",
+        benefits: [
+          "16-20 publications mensuelles",
+          "Stratégie et planning détaillé",
+          "Support prioritaire & ajustements",
+          "Storytelling optimisé pour la croissance"
+        ]
+      },
+      photography: {
+        title: "Photographie de Marque",
+        description: "Vous avez besoin de photos authentiques et cohérentes pour alimenter vos réseaux et supports. Un shooting professionnel adapté à votre univers.",
+        benefits: [
+          "10-20 photos retouchées professionnellement",
+          "Fichiers HD + formats web optimisés",
+          "Droits d'utilisation complets",
+          "Livraison en 7 jours"
+        ]
+      },
+      strategy: {
+        title: "Stratégie & Positionnement",
+        description: "Avant de produire du contenu, vous avez besoin de clarté. Définissons ensemble votre stratégie, votre message et votre ligne éditoriale.",
+        benefits: [
+          "Positionnement clair et différenciant",
+          "Ligne éditoriale personnalisée",
+          "Messages clés & ton de communication",
+          "Recommandations de formats et canaux"
+        ]
+      },
+      custom: {
+        title: "Formule Custom",
+        description: "Votre projet est unique et nécessite une approche personnalisée. Parlons de vos objectifs et créons ensemble la solution idéale.",
+        benefits: [
+          "Approche 100% adaptée à vos besoins",
+          "Flexibilité et réactivité maximale",
+          "Devis clair et sans surprise",
+          "Équipe dédiée à votre projet"
+        ]
+      }
+    };
+
+    let currentQuestion = 0;
+    let quizAnswers = {};
+
+    // === PROJECT MODAL SYSTEM ===
+    const projectsData = {
+      'burban': {
+        title: 'Burban',
+        image: 'https://i.imgur.com/sDzarSH.png',
+        client: 'Burban',
+        year: '2026',
+        duration: '3 mois',
+        budget: '€€€',
+        url: 'https://burbanofficial.github.io/BURBAN-V8',
+        description: 'Développement d‘un nouveau site Internet permettant de renforcer l‘identité de la marque ainsi que d‘accrôitre les ventes et la confiance envers les nouveaux Clients. Ce nouveau site Web est responsive sur tous les écrans, il est également doté d‘une nouvelle plateforme de paiement avec un design épuré qui donne envie de valider son panier.',
+        services: ['Refonte complète du site Internet', 'Design UI/UX', 'Content Management System (CMS)','Intégration de Stripe Checkout'],
+        results: [
+          'Une meilleure confiance des Clients envers la marque',
+          '35% taux d\'engagement',
+          '500+ nouveaux clients'
+        ]
+      },
+      'brandflow': {
+        title: 'BrandFlow Identity',
+        image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=400&fit=crop',
+        client: 'BrandFlow',
+        year: '2024',
+        duration: '12 semaines',
+        budget: '€€€',
+        url: 'https://www.brandflow.io',
+        description: 'Refonte complète de l\'identité visuelle pour une agence de branding en pleine expansion. Création d\'un système de design moderne, d\'une nouvelle application web et de tous les supports marketing.',
+        services: ['Branding', 'Design UX/UI', 'Web Design'],
+        results: [
+          'Brand recognition +45%',
+          '8 prix de design',
+          '150% augmentation de leads'
+        ]
+      },
+      'streamvibe': {
+        title: 'StreamVibe Platform',
+        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=400&fit=crop',
+        client: 'StreamVibe',
+        year: '2023',
+        duration: '16 semaines',
+        budget: '€€€€',
+        url: 'https://www.streamvibe.app',
+        description: 'Conception et développement d\'une plateforme de streaming vidéo avec interface utilisateur intuitive. Mise en place d\'un design system complet et d\'une expérience utilisateur optimisée.',
+        services: ['UX Design', 'Web Development', 'Design System'],
+        results: [
+          '100k utilisateurs actifs',
+          '4.8/5 rating en app store',
+          '95% user retention'
+        ]
+      },
+      'visualabs': {
+        title: 'VisuaLabs Summit',
+        image: 'https://images.unsplash.com/photo-1515378791036-0648a3e4d747?w=800&h=400&fit=crop',
+        client: 'VisuaLabs',
+        year: '2024',
+        duration: '6 semaines',
+        budget: '€€',
+        url: 'https://www.visualabs.tech',
+        description: 'Production vidéo complète pour un summit annuel regroupant 500+ professionnels. Captation live, montage des sessions, création de clips pour les réseaux sociaux et édition finale haute qualité.',
+        services: ['Production Vidéo', 'Live Streaming', 'Video Editing'],
+        results: [
+          '5000 spectateurs live',
+          '200k vues VOD en 1 mois',
+          'Satisfaction 4.9/5'
+        ]
+      },
+      'neuraiai': {
+        title: 'NeuralAI Campaign',
+        image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=400&fit=crop',
+        client: 'NeuralAI',
+        year: '2023',
+        duration: '10 semaines',
+        budget: '€€€',
+        url: 'https://www.neuraiai.com',
+        description: 'Campagne marketing globale pour le lancement d\'une solution IA révolutionnaire. Production de contenu vidéo, création d\'assets graphiques, et déploiement multi-canaux.',
+        services: ['Production Vidéo', 'Motion Graphics', 'Content Strategy'],
+        results: [
+          '1.2M impressions',
+          '12% taux de clic',
+          '50k leads générés'
+        ]
+      },
+      'creativehub': {
+        title: 'CreativeHub Analytics',
+        image: 'https://images.unsplash.com/photo-1460925895917-aeb19be489c7?w=800&h=400&fit=crop',
+        client: 'CreativeHub',
+        year: '2024',
+        duration: '8 semaines',
+        budget: '€€',
+        url: 'https://www.creativehub.co',
+        description: 'Conception d\'un dashboard analytique avancé pour visualiser les données de performance créative. Interface intuitive avec graphiques dynamiques et rapports personnalisables.',
+        services: ['UX Design', 'Data Visualization', 'Dashboard Design'],
+        results: [
+          '300% amélioration du temps d\'analyse',
+          '5000+ utilisateurs actifs',
+          '99.9% uptime'
+        ]
+      }
+    };
+
+    function openProjectModal(projectId) {
+      const project = projectsData[projectId];
+      if (!project) return;
+
+      let html = `
+        <img src="${project.image}" alt="${project.title}" class="project-modal-image">
+        <div class="project-modal-body">
+          <div class="project-modal-header">
+            <div class="project-modal-header-content">
+              <h2>${project.title}</h2>
+            </div>
+            <div class="project-modal-header-meta">
+              <div>${project.year}</div>
+            </div>
+          </div>
+
+          <p class="project-modal-description">${project.description}</p>
+
+          <div class="project-modal-grid">
+            <div class="project-detail-item">
+              <strong>${t('client')}</strong>
+              <p>${project.client}</p>
+            </div>
+            <div class="project-detail-item">
+              <strong>${t('duration')}</strong>
+              <p>${project.duration}</p>
+            </div>
+            <div class="project-detail-item">
+              <strong>${t('budget')}</strong>
+              <p>${project.budget}</p>
+            </div>
+          </div>
+
+          <div class="project-modal-section">
+            <h3>${t('servicesProvided')}</h3>
+            <div class="project-modal-services">
+      `;
+
+      project.services.forEach(service => {
+        html += `<span class="project-service-tag">${service}</span>`;
+      });
+
+      html += `
+            </div>
+          </div>
+
+          <div class="project-modal-section">
+            <h3>${t('resultsAchieved')}</h3>
+            <ul class="benefits-list">
+      `;
+
+      project.results.forEach(result => {
+        html += `<li>${result}</li>`;
+      });
+
+      html += `
+            </ul>
+          </div>
+
+          <div class="project-modal-cta">
+            <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="btn-primary">${t('visitWebsite')}</a>
+            <button class="btn-secondary" onclick="closeProjectModal();">${t('close')}</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('project-modal-body').innerHTML = html;
+      document.getElementById('project-modal').classList.add('active');
+      // Scroll to top of modal content
+      document.querySelector('.project-modal-content').scrollTop = 0;
+      // Block background scroll
+      document.body.classList.add('modal-open');
+    }
+
+    function closeProjectModal() {
+      document.getElementById('project-modal').classList.remove('active');
+      // Unblock background scroll
+      document.body.classList.remove('modal-open');
+    }
+
+    // Fermer la modal en cliquant en dehors
+    document.getElementById('project-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'project-modal') {
+        closeProjectModal();
+      }
+    });
+
+    // === SERVICE MODAL SYSTEM ===
+    const servicesData = {
+      'essential': {
+        number: '01',
+        title: 'Réseaux Sociaux',
+        subtitle: 'Publications & design de base',
+        pitch: 'Une présence régulière et cohérente pour poser les bases d\'une communication professionnelle sur les réseaux sociaux.',
+        description: 'Une présence régulière et cohérente pour poser les bases d\'une communication professionnelle sur les réseaux sociaux.',
+        timeline: 'Mensuelle',
+        budget: 'à partir de 149€ / mois',
+        deliverables: [
+          '4 publications (visuels + textes)/semaine soit 16 publications par mois',
+          'Calendrier éditorial mensuel'
+        ],
+        process: [
+          'Brief mensuel (objectifs, thématiques, contenus fournis)',
+          'Création des visuels (à partir de photos fournies)',
+          'Rédaction des textes courts',
+          'Ajustements et validation'
+        ]
+      },
+      'advanced': {
+        number: '02',
+        title: 'Photographie',
+        subtitle: 'Publications, identité visuelle & cohérence',
+        pitch: 'Un feed structuré et identifiable, pensé pour renforcer votre image de marque et votre crédibilité.',
+        description: 'Un feed structuré et identifiable, pensé pour renforcer votre image de marque et votre crédibilité.',
+        timeline: 'Mensuelle',
+        budget: 'à partir de 49€',
+        deliverables: [
+          '4 publications (visuels + textes)',
+          'Créations des visuels',
+          'Calendrier éditorial'
+        ],
+        process: [
+          'Analyse de votre image actuelle',
+          'Définition d\'une ligne visuelle cohérente',
+          'Ajustements et optimisations des photographies',
+          'Création des contenus',
+          'Validation'
+        ]
+      },
+      'premium': {
+        number: '03',
+        title: 'Conception de Site Web',
+        subtitle: 'Accompagnement éditorial complet',
+        pitch: 'Une communication continue, réfléchie et professionnelle pour développer votre visibilité et votre image sur le long terme.',
+        description: 'Une communication continue, réfléchie et professionnelle pour développer votre visibilité et votre image sur le long terme.',
+        timeline: 'Mensuelle',
+        budget: 'à partir de 449€',
+        deliverables: [
+          '1 site Internet esthétique et professionnel adapté à votre business'
+        ],
+        process: [
+          'Etude de votre site actuel (points positifs et axes d\'amélioration)',
+          'Conception de la nouvelle architecture du site en fonction de votre identité visuelle',
+          'Ajustements et validation'
+        ]
+      },
+      'photography': {
+        number: '04',
+        title: 'Branding Express',
+        subtitle: 'Shooting photo simple & efficace',
+        pitch: 'Des photos authentiques et cohérentes pour alimenter vos réseaux, votre site ou vos supports de communication.',
+        description: 'Des photos authentiques et cohérentes pour alimenter vos réseaux, votre site ou vos supports de communication.',
+        timeline: '1 journée + livraison sous 7 jours',
+        budget: 'à partir de 199€ / mois',
+        deliverables: [
+          '10 à 20 photos retouchées (selon formule)',
+          'Fichiers HD + formats web',
+          'Droits d\'utilisation inclus',
+          'Pas de vidéo, ni de tournage'
+        ],
+        process: [
+          'Brief visuel (ambiance, objectifs, usages)',
+          'Prise de vue (produits, lieux, portraits simples)',
+          'Sélection et retouches légères',
+          'Livraison finale'
+        ]
+      },
+      'strategy': {
+        number: '05',
+        title: 'Com‘360°',
+        subtitle: 'Clarté, cohérence et direction',
+        pitch: 'Une stratégie claire pour savoir quoi dire, à qui et comment — avant de produire du contenu.',
+        description: 'Une stratégie claire pour savoir quoi dire, à qui et comment — avant de produire du contenu.',
+        timeline: '7–14 jours',
+        budget: 'à partir de 599€ / mois',
+        deliverables: [
+          'Positionnement de marque',
+          'Ligne éditoriale claire',
+          'Messages clés & ton de communication',
+          'Recommandations de formats et canaux'
+        ],
+        process: [
+          'Entretien stratégique',
+          'Analyse de la cible et de la concurrence',
+          'Définition du positionnement et du message',
+          'Recommandations concrètes'
+        ]
+      },
+      'custom': {
+        number: '06',
+        title: 'Formule Signature',
+        subtitle: 'Adaptée à vos besoins réels',
+        pitch: 'Chaque projet est différent : cette formule s\'adapte précisément à vos objectifs, votre budget et votre rythme.',
+        description: 'Chaque projet est différent : cette formule s\'adapte précisément à vos objectifs, votre budget et votre rythme.',
+        timeline: 'Variable',
+        budget: 'Sur devis',
+        deliverables: [
+          'Définis ensemble selon le projet',
+          'Devis clair et détaillé'
+        ],
+        process: [
+          'Analyse du besoin',
+          'Proposition personnalisée',
+          'Validation du périmètre',
+          'Production & suivi'
+        ]
+      }
+    };
+
+    function openServiceModal(serviceId) {
+      const service = servicesData[serviceId];
+      if (!service) return;
+
+      let html = `
+        <div class="service-modal-header">
+          <div class="service-modal-number">${service.number}</div>
+          <h2>${service.title}</h2>
+        </div>
+        
+        <p class="service-modal-description">${service.description}</p>
+        
+        <div class="service-modal-details">
+          <div class="detail-item">
+            <strong>${t('timeline')}</strong>
+            <p>${service.timeline}</p>
+          </div>
+          <div class="detail-item">
+            <strong>${t('budget')}</strong>
+            <p>${service.budget}</p>
+          </div>
+          <div class="detail-item">
+            <strong>${t('process')}</strong>
+            <p>${service.process.length} étapes</p>
+          </div>
+        </div>
+
+        <div class="service-modal-benefits">
+          <h3>${t('deliverables')}</h3>
+          <ul class="benefits-list">
+      `;
+
+      service.deliverables.forEach(item => {
+        html += `<li>${item}</li>`;
+      });
+
+      html += `
+          </ul>
+        </div>
+
+        <div class="service-modal-benefits">
+          <h3>${t('ourProcess')}</h3>
+          <ul class="benefits-list">
+      `;
+
+      service.process.forEach(item => {
+        html += `<li>${item}</li>`;
+      });
+
+      html += `
+          </ul>
+        </div>
+
+        <div class="service-modal-cta">
+          <button class="btn-primary" onclick="scrollToContact(); closeServiceModal();">${t('discuss')}</button>
+          <button class="btn-secondary" onclick="closeServiceModal();">${t('close')}</button>
+        </div>
+      `;
+
+      document.getElementById('service-modal-body').innerHTML = html;
+      document.getElementById('service-modal').classList.add('active');
+      // Scroll to top of modal content
+      document.querySelector('.service-modal-content').scrollTop = 0;
+      // Block background scroll
+      document.body.classList.add('modal-open');
+    }
+
+    function closeServiceModal() {
+      document.getElementById('service-modal').classList.remove('active');
+      // Unblock background scroll
+      document.body.classList.remove('modal-open');
+    }
+
+    // Fermer la modal en cliquant en dehors
+    document.getElementById('service-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'service-modal') {
+        closeServiceModal();
+      }
+    });
+
+    function openQuiz() {
+      const modal = document.getElementById('quiz-modal');
+      modal.classList.add('active');
+      currentQuestion = 0;
+      quizAnswers = {};
+      renderQuestion();
+      // Block background scroll
+      document.body.classList.add('modal-open');
+    }
+
+    function closeQuiz() {
+      const modal = document.getElementById('quiz-modal');
+      modal.classList.remove('active');
+      // Unblock background scroll
+      document.body.classList.remove('modal-open');
+    }
+
+    function renderQuestion() {
+      const content = document.getElementById('quiz-content');
+      const translatedQuizData = getTranslatedQuizData();
+      const question = translatedQuizData[currentQuestion];
+      const progress = ((currentQuestion + 1) / translatedQuizData.length) * 100;
+
+      let html = `
+        <div class="quiz-title">Questions sur vos besoins</div>
+        <div class="quiz-subtitle">Question ${currentQuestion + 1}/${translatedQuizData.length}</div>
+        <div class="quiz-progress">
+          <div class="quiz-progress-bar" style="width: ${progress}%"></div>
+        </div>
+        <div class="quiz-question">
+          <h3>${question.question}</h3>
+          <div class="quiz-options">
+      `;
+
+      question.options.forEach((option, index) => {
+        html += `
+          <button class="quiz-option" onclick="selectOption('${option.category}', ${index})">
+            ${option.text}
+          </button>
+        `;
+      });
+
+      html += `</div></div>`;
+
+      content.innerHTML = html;
+    }
+
+    function getTranslatedQuizData() {
+      return [
+        {
+          question: t('quiz_q1'),
+          options: [
+            { text: t('quiz_q1_o1'), category: "essential" },
+            { text: t('quiz_q1_o2'), category: "advanced" },
+            { text: t('quiz_q1_o3'), category: "premium" },
+            { text: t('quiz_q1_o4'), category: "photography" }
+          ]
+        },
+        {
+          question: t('quiz_q2'),
+          options: [
+            { text: t('quiz_q2_o1'), category: "essential" },
+            { text: t('quiz_q2_o2'), category: "advanced" },
+            { text: t('quiz_q2_o3'), category: "premium" },
+            { text: t('quiz_q2_o4'), category: "custom" }
+          ]
+        },
+        {
+          question: t('quiz_q3'),
+          options: [
+            { text: t('quiz_q3_o1'), category: "photography" },
+            { text: t('quiz_q3_o2'), category: "advanced" },
+            { text: t('quiz_q3_o3'), category: "premium" },
+            { text: t('quiz_q3_o4'), category: "strategy" }
+          ]
+        },
+        {
+          question: t('quiz_q4'),
+          options: [
+            { text: t('quiz_q4_o1'), category: "strategy" },
+            { text: t('quiz_q4_o2'), category: "advanced" },
+            { text: t('quiz_q4_o3'), category: "premium" },
+            { text: t('quiz_q4_o4'), category: "essential" }
+          ]
+        },
+        {
+          question: t('quiz_q5'),
+          options: [
+            { text: t('quiz_q5_o1'), category: "photography" },
+            { text: t('quiz_q5_o2'), category: "advanced" },
+            { text: t('quiz_q5_o3'), category: "essential" },
+            { text: t('quiz_q5_o4'), category: "premium" }
+          ]
+        },
+        {
+          question: t('quiz_q6'),
+          options: [
+            { text: t('quiz_q6_o1'), category: "custom" },
+            { text: t('quiz_q6_o2'), category: "photography" },
+            { text: t('quiz_q6_o3'), category: "advanced" },
+            { text: t('quiz_q6_o4'), category: "premium" }
+          ]
+        },
+        {
+          question: t('quiz_q7'),
+          options: [
+            { text: t('quiz_q7_o1'), category: "premium" },
+            { text: t('quiz_q7_o2'), category: "essential" },
+            { text: t('quiz_q7_o3'), category: "advanced" },
+            { text: t('quiz_q7_o4'), category: "photography" }
+          ]
+        },
+        {
+          question: t('quiz_q8'),
+          options: [
+            { text: t('quiz_q8_o1'), category: "premium" },
+            { text: t('quiz_q8_o2'), category: "advanced" },
+            { text: t('quiz_q8_o3'), category: "essential" },
+            { text: t('quiz_q8_o4'), category: "photography" }
+          ]
+        },
+        {
+          question: t('quiz_q9'),
+          options: [
+            { text: t('quiz_q9_o1'), category: "photography" },
+            { text: t('quiz_q9_o2'), category: "essential" },
+            { text: t('quiz_q9_o3'), category: "advanced" },
+            { text: t('quiz_q9_o4'), category: "premium" }
+          ]
+        },
+        {
+          question: t('quiz_q10'),
+          options: [
+            { text: t('quiz_q10_o1'), category: "photography" },
+            { text: t('quiz_q10_o2'), category: "essential" },
+            { text: t('quiz_q10_o3'), category: "strategy" },
+            { text: t('quiz_q10_o4'), category: "premium" }
+          ]
+        }
+      ];
+    }
+
+    function selectOption(category, index) {
+      quizAnswers[currentQuestion] = category;
+      const translatedQuizData = getTranslatedQuizData();
+      
+      if (currentQuestion < translatedQuizData.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      // Compter les catégories les plus sélectionnées
+      const counts = {};
+      Object.values(quizAnswers).forEach(cat => {
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+
+      const recommendedService = Object.keys(counts).reduce((a, b) => 
+        counts[a] > counts[b] ? a : b
+      );
+
+      const service = serviceResults[recommendedService];
+      const content = document.getElementById('quiz-content');
+
+      let html = `
+        <div class="quiz-result">
+          <h2>${t('quiz_results')}</h2>
+          <div class="quiz-result-service">${service.title}</div>
+          <p class="quiz-result-desc">${service.description}</p>
+          <div style="text-align: left; background: rgba(255, 255, 255, 0.02); padding: 20px; border-radius: 6px; margin-bottom: 24px; border: 1px solid rgba(255, 255, 255, 0.1);">
+            <strong style="display: block; margin-bottom: 12px;">${t('discuss')} :</strong>
+            <ul style="list-style: none; padding: 0;">
+      `;
+
+      service.benefits.forEach(benefit => {
+        html += `<li style="margin-bottom: 8px; padding-left: 20px; position: relative;">
+          <span style="position: absolute; left: 0; color: var(--accent);">✓</span>
+          ${benefit}
+        </li>`;
+      });
+
+      html += `
+            </ul>
+          </div>
+          <div class="quiz-buttons">
+            <button class="quiz-btn quiz-btn-primary" onclick="scrollToContact(); closeQuiz();">
+              ${t('discuss')}
+            </button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="openQuiz();">
+              Recommencer le quiz
+            </button>
+          </div>
+        </div>
+      `;
+
+      content.innerHTML = html;
+    }
+
+    function scrollToContact() {
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Fermer la modal en cliquant en dehors
+    document.getElementById('quiz-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'quiz-modal') {
+        closeQuiz();
+      }
+    });
+
+    // === HERO CANVAS ANIMATION ===
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Créer une grille de points
+    const dots = [];
+    const dotRadius = 2;
+    const spacing = 60;
+    const accentColor = '#8b5cf6'; // Violet accent color
+    
+    function createDots() {
+      dots.length = 0;
+      for (let x = 0; x < canvas.width; x += spacing) {
+        for (let y = 0; y < canvas.height; y += spacing) {
+          dots.push({
+            x: x + Math.random() * 20 - 10,
+            y: y + Math.random() * 20 - 10,
+            opacity: 0,
+            targetOpacity: Math.random() * 0.6 + 0.2,
+            drawDelay: Math.random() * 3000,
+            onCurve: false
+          });
+        }
+      }
+    }
+    
+    createDots();
+    window.addEventListener('resize', createDots);
+    
+    let animationStartTime = Date.now();
+    
+    // Générer une seule courbe avec variations fluides mais toujours à la hausse
+    function generateCurvePoints() {
+      const curvePoints = [];
+      const startY = canvas.height * 0.85;
+      const endY = canvas.height * 0.1;
+      const totalHeight = startY - endY;
+      
+      for (let x = 0; x < canvas.width; x += 5) {
+        const progress = x / canvas.width;
+        
+        // Courbe de base: montée quadratique
+        const baseY = startY - (progress * progress) * totalHeight;
+        
+        // Ajouter des variations fluides mais toujours à la hausse
+        const wave1 = Math.sin(progress * Math.PI * 4) * 25;
+        const wave2 = Math.cos(progress * Math.PI * 2.5) * 20;
+        const wobble = Math.sin(progress * Math.PI * 8) * 10;
+        
+        // La courbe monte toujours, mais avec des ondulations
+        const y = baseY + wave1 + wave2 + wobble;
+        
+        curvePoints.push({ x, y });
+      }
+      
+      return curvePoints;
+    }
+    
+    const curvePoints = generateCurvePoints();
+    
+    function drawAnimation() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const elapsedTime = Date.now() - animationStartTime;
+      
+      // Réinitialiser les états des points
+      dots.forEach(dot => {
+        dot.onCurve = false;
+      });
+      
+      // Dessiner les points
+      dots.forEach((dot, index) => {
+        const timeToStart = dot.drawDelay;
+        const timeToFadeIn = 500;
+        const timeSinceStart = elapsedTime - timeToStart;
+        
+        if (timeSinceStart >= 0) {
+          dot.opacity = Math.min(timeSinceStart / timeToFadeIn, dot.targetOpacity);
+        }
+        
+        if (dot.opacity > 0) {
+          ctx.fillStyle = accentColor;
+          ctx.globalAlpha = dot.opacity;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, dotRadius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      });
+      
+      // Dessiner la courbe avec délai
+      const curveStartTime = 2000;
+      const timeSinceCurveStart = elapsedTime - curveStartTime;
+      
+      if (timeSinceCurveStart > 0) {
+        const curveDrawDuration = 2500;
+        const curveProgress = Math.min(timeSinceCurveStart / curveDrawDuration, 1);
+        const pointsToDrawCount = Math.floor(curvePoints.length * curveProgress);
+        
+        // Dessiner la courbe unique
+        if (pointsToDrawCount > 0) {
+          ctx.strokeStyle = accentColor;
+          ctx.lineWidth = 3;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.globalAlpha = 0.8;
+          
+          ctx.beginPath();
+          ctx.moveTo(curvePoints[0].x, curvePoints[0].y);
+          
+          for (let i = 1; i < pointsToDrawCount; i++) {
+            ctx.lineTo(curvePoints[i].x, curvePoints[i].y);
+          }
+          
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+          
+          // Mettre en évidence les points sur la courbe
+          for (let i = 0; i < pointsToDrawCount; i += 3) {
+            const curvePoint = curvePoints[i];
+            
+            dots.forEach(dot => {
+              const distance = Math.sqrt(
+                Math.pow(dot.x - curvePoint.x, 2) + Math.pow(dot.y - curvePoint.y, 2)
+              );
+              
+              if (distance < spacing * 0.7) {
+                dot.onCurve = true;
+              }
+            });
+          }
+          
+          // Redessiner les points sur la courbe avec une taille plus grande
+          dots.forEach(dot => {
+            if (dot.onCurve && dot.opacity > 0) {
+              ctx.fillStyle = accentColor;
+              ctx.globalAlpha = Math.min(dot.opacity * 1.5, 1);
+              ctx.beginPath();
+              ctx.arc(dot.x, dot.y, dotRadius * 2.5, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.globalAlpha = 1;
+            }
+          });
+        }
+      }
+      
+      // Redémarrer l'animation
+      if (elapsedTime > 7000) {
+        animationStartTime = Date.now();
+      }
+      
+      requestAnimationFrame(drawAnimation);
+    }
+    
+    drawAnimation();
+
+    // === APPLY TRANSLATIONS ===
+    function applyTranslations() {
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = t(key);
+      });
+    }
+
+    // Apply translations on page load
+    applyTranslations();
+    updateLanguageButton();
+
+    // Language toggle
+    const langToggle = document.getElementById('lang-toggle');
+    langToggle.addEventListener('click', () => {
+      userLanguage = userLanguage === 'fr' ? 'en' : 'fr';
+      localStorage.setItem('language', userLanguage);
+      document.documentElement.setAttribute('lang', userLanguage);
+      applyTranslations();
+      updateLanguageButton();
+    });
+
+    function updateLanguageButton() {
+      const langBtn = document.getElementById('lang-toggle');
+      langBtn.textContent = userLanguage === 'fr' ? 'EN' : 'FR';
+    }
+
+    // Listen for language changes (if implemented)
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'language') {
+        userLanguage = e.newValue;
+        document.documentElement.setAttribute('lang', userLanguage);
+        applyTranslations();
+        updateLanguageButton();
+      }
+    });
+  </script>
+</body>
+</html>
